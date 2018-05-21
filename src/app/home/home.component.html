@@ -1,3 +1,99 @@
-<p>
-  home works!
-</p>
+<div class="container-fluid">
+    <div class="row marginBottom">
+      <div class="col-sm-6  pull-right">
+        <div class="input-group stylish-input-group">
+          <input *ngIf="config.filtering" [ngTableFiltering]="config.filtering" (tableChanged)="onChangeTable(config)" type="text"
+            class="form-control" placeholder="Search">
+          <span class="input-group-addon">
+            <button type="submit">
+              <span class="glyphicon glyphicon-search"></span>
+            </button>
+          </span>
+        </div>
+      </div>
+    </div>
+  
+    <rk-table [config]="config" (tableChanged)="onChangeTable(config)" (cellClicked)="onCellClick($event, template)" (editClicked)="onEditClick($event, template)"
+      (deleteClicked)="onDeleteClick($event)" (addClicked)="onAddClick($event, template)" [rows]="rows" [columns]="columns">
+    </rk-table>
+    <div>
+      <p style="font-style:italic;">*click on Row to View Details</p>
+    </div>
+    <pagination *ngIf="config.paging" class="pagination-sm" [(ngModel)]="page" [totalItems]="length" [itemsPerPage]="itemsPerPage"
+      [maxSize]="maxSize" [boundaryLinks]="true" [rotate]="false" (pageChanged)="onChangeTable(config, $event)" (numPages)="numPages = $event">
+    </pagination>
+    <pre *ngIf="config.paging" class="card card-block card-header">Page: {{page}} / {{numPages}}</pre>
+  </div>
+  
+  <ng-template #template>
+    <div class="modal-header">
+      <h4 class="modal-title pull-left">Company Acquisition</h4>
+      <button type="button" class="close pull-right" aria-label="Close" (click)="cancel()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body" style="height: 580px;">
+      <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 from-group">
+        <label for="status">Company:* </label>
+        <input type="text" class="form-control" [(ngModel)]="modalData.company_name" [disabled]="!editable" required>
+      </div>
+  
+      <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 from-group">
+        <div>
+          <label for="status">Status:* </label>
+        </div>
+        <div>
+          <label class="radio-inline">
+            <input type="radio" name="optradio" [value]="'Reseraching'" [(ngModel)]="modalData.status" [disabled]="!editable">Reseraching</label>
+          <label class="radio-inline">
+            <input type="radio" name="optradio" [value]="'Pending Approval'" [(ngModel)]="modalData.status" [disabled]="!editable">Pending Approval</label>
+          <label class="radio-inline">
+            <input type="radio" name="optradio" [value]="'Approved'" [(ngModel)]="modalData.status" [disabled]="!editable">Approved</label>
+          <label class="radio-inline">
+            <input type="radio" name="optradio" [value]="'Declined'" [(ngModel)]="modalData.status" [disabled]="!editable">Declined</label>
+        </div>
+      </div>
+      <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <label for="status">Company Info:* </label>
+        <textarea class="form-control" rows="4" id="company_info" [(ngModel)]="modalData.company_info" [disabled]="!editable" maxlength="300"
+          required></textarea>
+      </div>
+      <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <label for="status">Contacts:* </label>
+        <input type="text" class="form-control" [(ngModel)]="modalData.contacts" [disabled]="!editable" required>
+      </div>
+  
+      <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <label for="status">Net Revenue:* </label>
+        <input type="text" class="form-control" [(ngModel)]="modalData.net_revenue" [disabled]="!editable" required>
+      </div>
+      <!-- <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <label for="status">0839: </label>
+        </div> -->
+  
+      <div *ngIf="!editable">
+        <div style="display: block;">
+          <canvas style="height:200px;" baseChart [datasets]="barChartData" [labels]="barChartLabels" [options]="barChartOptions" [legend]="barChartLegend"
+            [chartType]="barChartType" (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)"></canvas>
+        </div>
+        <!-- <button (click)="randomize()">Update</button> -->
+      </div>
+      <div *ngIf="editable">
+        <div class="form-group">
+          <label class="col-lg-12 col-md-12 col-sm-12 col-xs-12" for="financial_info">Financial Details: </label>
+          <div class="col-lg-4 col-md-4 col-sm-3 col-xs-3" *ngFor="let item of finArr">
+            <label for="status">{{item.year}}* </label>
+            <input type="text" class="form-control" [(ngModel)]="item.revenue" [disabled]="!editable" required>
+          </div>
+          <button type="button" class="btn btn-danger top-margin pull-right col-lg-3 col-md-3 col-sm-6 col-xs-6 col-md-offset-1" (click)="cancel()">
+            Cancel
+          </button>
+          <button type="button" class="btn btn-success top-margin pull-right col-lg-3 col-md-3 col-sm-6 col-xs-6" (click)="saveData(modalData)">
+            Save
+          </button>
+        </div>
+        <!-- <button (click)="randomize()">Update</button> -->
+      </div>
+    </div>
+  </ng-template>
+  
