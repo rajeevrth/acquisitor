@@ -1,0 +1,33 @@
+.stylish-input-group .input-group-addon{
+    background: white !important; 
+}
+.stylish-input-group .form-control{
+	border-right:0; 
+	box-shadow:0 0 0; 
+	border-color:#ccc;
+}
+.stylish-input-group button{
+    border:0;
+    background:transparent;
+}
+.floatRight{
+    float:right;
+}
+.margin-right{
+    margin-right: 1%;
+}
+.top-margin{
+    margin-top:2%;
+}
+
+.navbar-brand-centered {
+    position: absolute;
+    left: 50%;
+    display: block;
+    width: 160px;
+    text-align: center;
+    background-color: #eee;
+}
+.marginBottom{
+    margin-bottom: 1%;
+}

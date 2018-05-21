@@ -1,0 +1,34 @@
+<table class="table table-striped table-bordered dataTable" role="grid" style="width: 100%;">
+    <thead>
+        <tr role="row">
+            <th *ngFor="let column of columns" [rkTableSorting]="config" [column]="column" (sortChanged)="onChangeTable($event)">
+                {{column.title}}
+                <i *ngIf="config && column.sort" class="pull-right fa" [ngClass]="{'fa-chevron-down': column.sort === 'desc', 'fa-chevron-up': column.sort === 'asc'}"></i>
+            </th>
+            <th>
+                <button type="button" class="btn btn-primary pull-right margin-right" (click)="addCompany(row)">
+                    Add New
+                </button>
+            </th>
+
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let row of rows">
+            <td *ngFor="let column of columns" style="cursor:pointer; max-width:200px" (click)="selectCompany(row)">
+                    <!-- <app-chart-component [chartData]="row" *ngIf="column.name=='financial_information'"></app-chart-component> -->
+                <img *ngIf="column.name=='company_name'" src={{row.image_url}} alt="" style="width:50px; height:auto;"><span *ngIf="column.name!='financial_information'"> {{getData(row, column.name)}}</span>
+                
+            </td>
+            <td>
+                <button type="button" class="btn btn-success col-lg-5 col-md-5 col-sm-12 col-xs-12" (click)="editCompany(row)">
+                    Edit
+                </button>
+                <button type="button" class="btn btn-danger pull-right col-lg-5 col-md-5 col-sm-12 col-xs-12" (click)="deleteCompany(row)">
+                    Delete
+                </button>
+
+            </td>
+        </tr>
+    </tbody>
+</table>
